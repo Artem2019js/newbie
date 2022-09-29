@@ -1,12 +1,12 @@
 let money, time;
-function start() {
-  (money = +prompt("Ваш бюджет на месяц?", "")),
-    (time = prompt("Введите дату в формате YYYY-MM-DD", ""));
+function detectDayBudget() {
+  //   money = +prompt("Укажите ваш бюджет на месяц", "");
+  // (time = prompt("Введите дату в формате YYYY-MM-DD", ""));
   while (isNaN(money) || money == "" || money == null) {
-    money = +prompt("Ваш бюджет на месяц?", "");
+    money = +prompt("Укажите ваш бюджет на месяц", "");
   }
 }
-start();
+detectDayBudget();
 
 let appData = {
   budget: money,
@@ -17,7 +17,26 @@ let appData = {
   income: [],
 };
 
-// // alert(appData.budget / 30);
+appData.moneyPerDay = (appData.budget / 30).toFixed();
+
+alert("Day budget" + appData.moneyPerDay);
+
+function chooseOptExpenses() {
+  for (i = 0; i < 3; i++) {
+    let c = prompt("Статья необязательных расходов?", "");
+    if (
+      typeof c === "string" ||
+      typeof c != null ||
+      (c != "" && c.length < 50)
+    ) {
+      console.log("right");
+    } else {
+      c--;
+    }
+  }
+}
+chooseOptExpenses();
+
 function chooseExpenses() {
   for (i = 0; i < 1; i++) {
     let a = prompt("Введите обязательную статью расходов в этом месяце", ""),
@@ -39,26 +58,26 @@ function chooseExpenses() {
 }
 chooseExpenses();
 
-appData.moneyPerDay = (appData.budget / 30).toFixed();
-
-alert("Day budget" + appData.moneyPerDay);
-
-if (appData.moneyPerDay < 100) {
-  console.log("Минимальный уровень достатка");
-} else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
-  console.log("Средний уровень достатка");
-} else if (appData.moneyPerDay > 2000) {
-  console.log("Высокий уровень достатка");
-} else {
-  console.log("Произошла ошибка");
+function detectLevel() {
+  if (appData.moneyPerDay < 100) {
+    console.log("Minimal level");
+  } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
+    console.log("Middle level of prosperity");
+  } else if (appData.moneyPerDay > 2000 && appData.moneyPerDay < 9000) {
+    console.log("High level of prosperity");
+  } else {
+    console.log("error");
+  }
 }
+
+detectLevel();
 
 function checkSavings() {
   if (appData.savings == true) {
     let = save = +prompt("СУММА НАКОПЛЕНИЙ?");
     percent = +prompt("Под какой процент?");
-    appData.monthIncome = (save / 100 / 12) * percent;
-    alert("Дохо в месяц с вашего депозита:" + appData.monthIncome);
+    appData.monthIncome = ((save / 100 / 12) * percent).toFixed();
+    alert("Доход в месяц с вашего депозита:" + appData.monthIncome);
   }
 }
 checkSavings();
